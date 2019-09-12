@@ -1,0 +1,15 @@
+{
+  "Veggie" : [
+    "French fries",
+    "Veggieburger",
+    "Carrots",
+    "Apple",
+    "Banana",
+    "Milkshake"
+  ],
+  "Non-Veggie" : [
+    "Cheeseburger",
+    "Hamburger",
+    "Hot dog"
+  ]
+}
