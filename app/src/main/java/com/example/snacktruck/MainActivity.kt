@@ -1,10 +1,8 @@
 package com.example.snacktruck
 
-import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
@@ -13,12 +11,15 @@ import android.widget.TextView
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var snacksJson: JsonObject
     private lateinit var snackMenu: List<Snack>
     private lateinit var snackListView: ListView
+
+    private val filterCategories = mutableMapOf(
+        Snack.Veggie to true, Snack.NonVeggie to true
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +32,18 @@ class MainActivity : AppCompatActivity() {
     private fun resetSnackList() {
         snacksJson = getSnacksFromServer()
         snackMenu = getSnackList(snacksJson).toMutableList()
-        val snackAdapter = SnackListAdapter(this, snackMenu)
+        updateSnackList()
+    }
+
+    private fun updateSnackList() {
+        val snackAdapter = SnackListAdapter(this,
+            snackMenu.filter { filterCategories[it.category] as Boolean })
         snackListView.adapter = snackAdapter
     }
 
     // Converts the JSON object to a list of Snack objects
     private fun getSnackList(snacks: JsonObject): Array<Snack> {
-        val categories = listOf(Snack.Categories.Veggie, Snack.Categories.NonVeggie)
+        val categories = listOf(Snack.Veggie, Snack.NonVeggie)
 
         // For each category, find the snack names, then create a Snack object for each,
         // and return them all as a flat list
@@ -73,6 +79,8 @@ class MainActivity : AppCompatActivity() {
 
     @Suppress("UNUSED_PARAMETER")
     fun submitOrderOnClick(view: View){
+        if(snackMenu.none { it.selected }) return
+
         val orderList = snackMenu.filter{it.selected}.map { it.name }
         val orderListView = ListView(this)
         orderListView.adapter = ArrayAdapter(this, R.layout.order_list, orderList)
@@ -90,6 +98,12 @@ class MainActivity : AppCompatActivity() {
         // TODO: Send the order to the server
 
         resetSnackList()
+    }
+
+    fun toggleFilter(view: View){
+        val textView: TextView = (view.parent as LinearLayout).getChildAt(1) as TextView
+        filterCategories[textView.text.toString()]  = !(filterCategories[textView.text] as Boolean)
+        updateSnackList()
     }
 
 }

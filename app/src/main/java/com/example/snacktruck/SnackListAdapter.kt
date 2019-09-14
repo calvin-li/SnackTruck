@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.CheckBox
 import android.widget.TextView
 
 class SnackListAdapter(context: Context,
@@ -26,6 +27,10 @@ ArrayAdapter<Snack>(context, 0, snackList)
         when (currentSnack.category){
             Snack.Categories.Veggie -> snackTextView.setTextColor(Color.rgb(0, 191, 0))
             Snack.Categories.NonVeggie -> snackTextView.setTextColor(Color.RED)
+        }
+
+        if(currentSnack.selected) {
+            container.findViewById<CheckBox>(R.id.selected).isChecked = true
         }
 
         return container

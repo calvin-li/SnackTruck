@@ -12,12 +12,13 @@
             android:layout_margin="@dimen/standard_margin"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/checkBox"/>
+            android:id="@+id/selected"/>
     <TextView
             android:textSize="24sp"
+            android:gravity="center"
             android:layout_margin="@dimen/standard_margin"
             android:padding="@dimen/standard_padding"
             android:id="@+id/snackName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 </LinearLayout>
