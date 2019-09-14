@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Snack Truck</string>
+    <string name="submit_order">Submit Order</string>
 </resources>

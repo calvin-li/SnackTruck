@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 
 class SnackListAdapter(context: Context,
-                       private val snackList: Array<Snack>):
+                       private val snackList: List<Snack>):
 ArrayAdapter<Snack>(context, 0, snackList)
 // Overriding GetView, so don't have to pass item layout to constructor
 {
@@ -24,7 +24,7 @@ ArrayAdapter<Snack>(context, 0, snackList)
 
         snackTextView.text = currentSnack.name
         when (currentSnack.category){
-            Snack.Categories.Veggie -> snackTextView.setTextColor(Color.GREEN)
+            Snack.Categories.Veggie -> snackTextView.setTextColor(Color.rgb(0, 191, 0))
             Snack.Categories.NonVeggie -> snackTextView.setTextColor(Color.RED)
         }
 
