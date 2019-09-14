@@ -1,13 +1,13 @@
 package com.example.snacktruck
 
+import android.content.Context
+import android.content.DialogInterface
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
+import android.view.*
+import android.widget.*
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         Snack.Veggie to true, Snack.NonVeggie to true
     )
 
+    private var newSnacks: List<Snack> = listOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,9 +31,57 @@ class MainActivity : AppCompatActivity() {
         resetSnackList()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_add -> {
+                val layoutInflater: LayoutInflater = this.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                val addView = layoutInflater.inflate(R.layout.add_snack_dialog, null) as LinearLayout
+                val editText = addView.findViewById<EditText>(R.id.add_snack_edittext)
+                val categoryChooser = addView.findViewById<Spinner>(R.id.category_chooser)
+
+                categoryChooser.adapter = ArrayAdapter(
+                    this,
+                    android.R.layout.simple_spinner_dropdown_item,
+                    listOf(Snack.Veggie, Snack.NonVeggie)
+                    )
+
+                val addDialog = AlertDialog.Builder(this)
+                    .setTitle("Add New Order")
+                    .setView(addView)
+                    .setPositiveButton("Confirm") { _, _ ->
+                        addOrder(categoryChooser.selectedItem as String, editText.text.toString())}
+                    .setNegativeButton("Cancel") { _, _ -> }
+                    .create()
+
+                // Pressing "enter" will confirm
+                if(Build.VERSION.SDK_INT > 14) {
+                    editText.setOnEditorActionListener { _, _, _ ->
+                        addDialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick()
+                    }
+                }
+
+                addDialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MODE_CHANGED)
+                addDialog.show()
+                editText.requestFocus()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun addOrder(category: String, newSnack: String) {
+        newSnacks = newSnacks.plus(Snack(category, newSnack))
+        resetSnackList()
+    }
+
     private fun resetSnackList() {
         snacksJson = getSnacksFromServer()
-        snackMenu = getSnackList(snacksJson).toMutableList()
+        snackMenu = getSnackList(snacksJson)
         updateSnackList()
     }
 
@@ -42,17 +92,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Converts the JSON object to a list of Snack objects
-    private fun getSnackList(snacks: JsonObject): Array<Snack> {
+    private fun getSnackList(snacks: JsonObject): List<Snack> {
         val categories = listOf(Snack.Veggie, Snack.NonVeggie)
 
         // For each category, find the snack names, then create a Snack object for each,
         // and return them all as a flat list
         // TODO: Add unit test
-        return (categories.flatMap { c ->
+        val defaultSnackList = (categories.flatMap { c ->
             (snacks[c] as JsonArray<String>).map {
                 Snack(c, it)
             }
-        }).toTypedArray()
+        }).toList()
+
+        val newSnackList = newSnacks.map { it.selected = false; it }
+
+        return defaultSnackList + newSnackList
+
     }
 
     private fun getSnacksFromServer(): JsonObject {

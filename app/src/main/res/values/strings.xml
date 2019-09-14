@@ -3,4 +3,6 @@
     <string name="submit_order">Submit Order</string>
     <string name="veggie">Veggie</string>
     <string name="non_veggie">Non-Veggie</string>
+    <string name="add_new_snack">Add new snack</string>
+    <string name="add_hint">Add a new snack item here</string>
 </resources>

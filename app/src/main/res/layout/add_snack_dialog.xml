@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- hint is defaulted to add quest here to get italicizing to work. Replace as appropriate -->
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+    <EditText
+              android:id="@+id/add_snack_edittext"
+              android:hint="@string/add_hint"
+              android:inputType="textCapSentences"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    </EditText>
+    <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/category_chooser"/>
+</LinearLayout>

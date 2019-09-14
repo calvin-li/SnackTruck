@@ -9,6 +9,16 @@ import org.junit.Assert.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
+
+/**
+ * UI Tests:
+ *  Confirm select state is correct (both visually and in data) for the following operations:
+ *      - Confirming order
+ *      - Canceling order
+ *      - Leaving app
+ *      - Filtering
+ *      - Adding new snacks
+ */
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
