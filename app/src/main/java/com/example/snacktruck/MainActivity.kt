@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.VisibleForTesting
 import android.support.v7.app.AlertDialog
 import android.view.*
 import android.widget.*
@@ -13,15 +14,19 @@ import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var snacksJson: JsonObject
-    private lateinit var snackMenu: List<Snack>
+    @VisibleForTesting
+    // Denotes that this method would otherwise have been private
+    internal lateinit var snacksJson: JsonObject
+    @VisibleForTesting
+    internal lateinit var snackMenu: List<Snack>
     private lateinit var snackListView: ListView
 
     private val filterCategories = mutableMapOf(
         Snack.Veggie to true, Snack.NonVeggie to true
     )
 
-    private var newSnacks: List<Snack> = listOf()
+    @VisibleForTesting
+    internal var newSnacks: List<Snack> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun resetSnackList() {
         snacksJson = getSnacksFromServer()
-        snackMenu = getSnackList(snacksJson)
+        snackMenu = getSnackList()
         updateSnackList()
     }
 
@@ -92,14 +97,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Converts the JSON object to a list of Snack objects
-    private fun getSnackList(snacks: JsonObject): List<Snack> {
+    @VisibleForTesting
+    internal fun getSnackList(): List<Snack> {
         val categories = listOf(Snack.Veggie, Snack.NonVeggie)
 
         // For each category, find the snack names, then create a Snack object for each,
         // and return them all as a flat list
         // TODO: Add unit test
         val defaultSnackList = (categories.flatMap { c ->
-            (snacks[c] as JsonArray<String>).map {
+            (snacksJson[c] as JsonArray<String>).map {
                 Snack(c, it)
             }
         }).toList()
@@ -122,10 +128,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onSnackCheckboxClick(view: View){
-        // TODO: find some way to test this
         val textView: TextView = (view.parent as LinearLayout).findViewById(R.id.snackName)
+        toggleSnack(textView.text.toString())
+    }
+
+    @VisibleForTesting
+    internal fun toggleSnack(snackName: String) {
         snackMenu = snackMenu.map {
-            if (it.name == textView.text){
+            if (it.name == snackName) {
                 it.selected = !it.selected
             }
             it
