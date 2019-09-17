@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onSnackCheckboxClick(view: View){
-        val textView: TextView = (view.parent as LinearLayout).findViewById(R.id.snackName)
+        val textView: TextView = (view.parent as LinearLayout).findViewById(R.id.snack_name)
         toggleSnack(textView.text.toString())
     }
 

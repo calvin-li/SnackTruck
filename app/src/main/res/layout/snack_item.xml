@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- hardcoding most things here, in an actual app would use styles -->
 <LinearLayout
+        android:id="@+id/snack_item_container"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_gravity="center"
         android:layout_margin="@dimen/standard_margin"
@@ -12,13 +13,13 @@
             android:layout_margin="@dimen/standard_margin"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/selected"/>
+            android:id="@+id/snack_checkbox"/>
     <TextView
             android:textSize="24sp"
             android:gravity="center"
             android:layout_margin="@dimen/standard_margin"
             android:padding="@dimen/standard_padding"
-            android:id="@+id/snackName"
+            android:id="@+id/snack_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 </LinearLayout>

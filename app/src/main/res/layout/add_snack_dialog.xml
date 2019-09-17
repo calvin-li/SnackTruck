@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- hint is defaulted to add quest here to get italicizing to work. Replace as appropriate -->
 <LinearLayout
+        android:id="@+id/add_snack_container"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_height="wrap_content"

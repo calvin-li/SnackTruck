@@ -6,24 +6,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main_container"
     tools:context=".MainActivity">
 
     <LinearLayout
+            android:id="@+id/filter_container"
             android:orientation="horizontal"
             android:paddingLeft="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <LinearLayout
+                android:id="@+id/veggie_container"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <CheckBox
+                    android:id="@+id/veggie_checkbox"
                     android:checked="true"
                     android:onClick="toggleFilter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <TextView
+                    android:id="@+id/veggie_text"
                     android:text="@string/veggie"
                     android:gravity="center"
                     android:layout_width="wrap_content"
@@ -31,15 +36,18 @@
         </LinearLayout>
 
         <LinearLayout
+                android:id="@+id/nonveggie_container"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <CheckBox
+                    android:id="@+id/nonveggie_checkbox"
                     android:checked="true"
                     android:onClick="toggleFilter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <TextView
+                    android:id="@+id/nonveggie_text"
                     android:text="@string/non_veggie"
                     android:gravity="center"
                     android:layout_width="wrap_content"

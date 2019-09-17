@@ -20,7 +20,7 @@ ArrayAdapter<Snack>(context, 0, snackList)
             Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
             .inflate(R.layout.snack_item, parent, false)
 
-        val snackTextView = container.findViewById<TextView>(R.id.snackName)
+        val snackTextView = container.findViewById<TextView>(R.id.snack_name)
         val currentSnack = snackList[position]
 
         snackTextView.text = currentSnack.name
@@ -30,7 +30,7 @@ ArrayAdapter<Snack>(context, 0, snackList)
         }
 
         if(currentSnack.selected) {
-            container.findViewById<CheckBox>(R.id.selected).isChecked = true
+            container.findViewById<CheckBox>(R.id.snack_checkbox).isChecked = true
         }
 
         return container
