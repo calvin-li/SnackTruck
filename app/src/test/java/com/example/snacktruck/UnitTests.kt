@@ -1,5 +1,7 @@
 package com.example.snacktruck
 
+import android.app.Application
+import android.content.res.XmlResourceParser
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
 import org.junit.Test
@@ -87,5 +89,11 @@ class UnitTests {
         testActivity.toggleSnack("snack2")
         expectedSnackList[1].selected = false
         assertEquals(expectedSnackList, testActivity.snackMenu)
+    }
+
+    @Test
+    fun confirmStrings(){
+        // TODO: figure out how to access string resources from UTs
+        assertEquals(Snack.Veggie, R.string.veggie)
     }
 }

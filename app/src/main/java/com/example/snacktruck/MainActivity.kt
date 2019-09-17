@@ -148,6 +148,7 @@ class MainActivity : AppCompatActivity() {
 
         val orderList = snackMenu.filter{it.selected}.map { it.name }
         val orderListView = ListView(this)
+        orderListView.id = R.id.order_list
         orderListView.adapter = ArrayAdapter(this, R.layout.order_list, orderList)
 
         val confirmDialog = AlertDialog.Builder(this)
