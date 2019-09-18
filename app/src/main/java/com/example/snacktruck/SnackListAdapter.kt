@@ -25,8 +25,8 @@ ArrayAdapter<Snack>(context, 0, snackList)
 
         snackTextView.text = currentSnack.name
         when (currentSnack.category){
-            Snack.Categories.Veggie -> snackTextView.setTextColor(Color.rgb(0, 191, 0))
-            Snack.Categories.NonVeggie -> snackTextView.setTextColor(Color.RED)
+            Snack.Veggie -> snackTextView.setTextColor(Color.rgb(0, 191, 0))
+            Snack.NonVeggie -> snackTextView.setTextColor(Color.RED)
         }
 
         if(currentSnack.selected) {

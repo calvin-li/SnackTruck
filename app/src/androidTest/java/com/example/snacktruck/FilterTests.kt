@@ -8,10 +8,13 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import org.hamcrest.CoreMatchers.allOf
+
+import org.hamcrest.CoreMatchers.*
+import org.hamcrest.Matchers
+import org.hamcrest.beans.HasPropertyWithValue.hasProperty
+
 import org.junit.Rule
 import org.junit.Test
-import java.util.regex.Matcher
 
 @LargeTest
 class FilterTests{
@@ -55,6 +58,33 @@ class FilterTests{
 
         checkSnackItems(veggieSnacks, doesNotExist())
         checkSnackItems(nonVeggieSnacks, doesNotExist())
+    }
+
+    @Test
+    fun filterCheckboxTest(){
+        val snackContainerMatcher = Matchers.allOf(
+            withId(R.id.snack_item_container),
+            withChild(
+                withText("French fries")
+            ),
+            withParent(
+                withId(R.id.snackList)
+            )
+        )
+
+        val checkBox = onView(
+            Matchers.allOf(
+                withParent(snackContainerMatcher),
+                withId(R.id.snack_checkbox),
+                isDisplayed()
+            )
+        )
+        checkBox.perform(click())
+
+        onView(withId(R.id.veggie_checkbox)).perform(click())
+        onView(withId(R.id.veggie_checkbox)).perform(click())
+
+        checkBox.check(matches(hasProperty("isChecked", equalTo(true))))
     }
 
     private fun checkSnackItems(

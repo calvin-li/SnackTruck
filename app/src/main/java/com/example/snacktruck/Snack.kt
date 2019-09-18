@@ -1,6 +1,5 @@
 package com.example.snacktruck
 
-import android.provider.Settings.Global.getString
 
 class Snack(val category: String,
             val name: String,

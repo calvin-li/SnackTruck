@@ -58,6 +58,7 @@
 
     <ListView
         android:layout_width="match_parent"
+        android:fadeScrollbars="false"
         android:layout_height="0dp"
         android:id="@+id/snackList"
         android:padding="8dp"
