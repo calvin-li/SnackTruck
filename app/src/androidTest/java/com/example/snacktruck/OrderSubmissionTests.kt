@@ -4,7 +4,6 @@ package com.example.snacktruck
 import androidx.test.espresso.ViewInteraction
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
 import android.view.View
 import android.view.ViewGroup
 
@@ -19,12 +18,10 @@ import org.hamcrest.Matchers.*
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 import org.junit.Before
 
 @LargeTest
-@RunWith(AndroidJUnit4::class)
 class OrderSubmissionTests {
 
     @Rule
@@ -52,7 +49,7 @@ class OrderSubmissionTests {
     @Test
     fun zeroOrdersTest() {
         submitButton.perform(click())
-        orderedItem.check(doesNotExist())
+        orderTest(emptyList())
     }
 
     @Test
@@ -73,6 +70,27 @@ class OrderSubmissionTests {
         orderTest(itemsToTest)
     }
 
+    @Test
+    fun orderConfirmTest(){
+        val itemsToTest = listOf("French fries")
+        orderTest(itemsToTest)
+        onView(
+            allOf(withText("Confirm"))
+        ).perform(click())
+        orderTest(emptyList())
+    }
+
+    @Test
+    fun orderCancelTest(){
+        val itemsToTest = listOf("French fries")
+        orderTest(itemsToTest)
+        onView(
+            allOf(withText("Cancel"))
+        ).perform(click())
+        submitButton.perform((click()))
+        checkOrderedItems(itemsToTest)
+    }
+
     private fun orderTest(itemsToTest: List<String>) {
         itemsToTest.map { selectMenuItem(it) }
         submitButton.perform((click()))
@@ -91,12 +109,16 @@ class OrderSubmissionTests {
         }
 
         // Check that no other items are displayed
-        onView(
-            allOf(
-                withId(R.id.order_list),
-                hasChildCount(itemsToTest.count())
+        if (itemsToTest.count() > 0) {
+            onView(
+                allOf(
+                    withId(R.id.order_list),
+                    hasChildCount(itemsToTest.count())
                 )
             ).check(matches(isDisplayed()))
+        } else{
+            onView(withId(R.id.order_list)).check(doesNotExist())
+        }
     }
 
     private fun selectMenuItem(itemName: String) {
