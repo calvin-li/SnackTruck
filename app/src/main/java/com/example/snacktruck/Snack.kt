@@ -6,7 +6,6 @@ class Snack(val category: String,
             var selected: Boolean = false){
 
     companion object Categories{
-        // Should match values in strings.xml (TODO: Test)?
         const val Veggie = "Veggie"
         const val NonVeggie = "Non-Veggie"
     }

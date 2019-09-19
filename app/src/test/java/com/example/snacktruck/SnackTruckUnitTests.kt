@@ -1,21 +1,12 @@
 package com.example.snacktruck
 
-import android.app.Application
-import android.content.res.XmlResourceParser
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
 import org.junit.Test
 
 import org.junit.Assert.*
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-
-// TODO: Choose a better name
-class UnitTests {
+class SnackTruckUnitTests {
     private val testSnacksJsonRaw = "{\n" +
             "  \"Veggie\" : [\n" +
             "    \"French fries\",\n" +
@@ -89,11 +80,5 @@ class UnitTests {
         testActivity.toggleSnack("snack2")
         expectedSnackList[1].selected = false
         assertEquals(expectedSnackList, testActivity.snackMenu)
-    }
-
-    @Test
-    fun confirmStrings(){
-        // TODO: figure out how to access string resources from UTs
-        assertEquals(Snack.Veggie, R.string.veggie)
     }
 }

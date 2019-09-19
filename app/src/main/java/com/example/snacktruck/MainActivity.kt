@@ -103,7 +103,6 @@ class MainActivity : AppCompatActivity() {
 
         // For each category, find the snack names, then create a Snack object for each,
         // and return them all as a flat list
-        // TODO: Add unit test
         val defaultSnackList = (categories.flatMap { c ->
             (snacksJson[c] as JsonArray<String>).map {
                 Snack(c, it)
