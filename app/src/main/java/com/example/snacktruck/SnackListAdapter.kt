@@ -2,6 +2,7 @@ package com.example.snacktruck
 
 import android.content.Context
 import android.graphics.Color
+import android.support.v4.content.ContextCompat.getColor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,8 +26,8 @@ ArrayAdapter<Snack>(context, 0, snackList)
 
         snackTextView.text = currentSnack.name
         when (currentSnack.category){
-            Snack.Veggie -> snackTextView.setTextColor(Color.rgb(0, 191, 0))
-            Snack.NonVeggie -> snackTextView.setTextColor(Color.RED)
+            Snack.Veggie -> snackTextView.setTextColor(getColor(context, R.color.veggie))
+            Snack.NonVeggie -> snackTextView.setTextColor(getColor(context, R.color.nonVeggie))
         }
 
         if(currentSnack.selected) {

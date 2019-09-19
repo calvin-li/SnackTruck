@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        snackListView =  this.findViewById(R.id.snackList)
+        snackListView =  this.findViewById(R.id.snack_list)
 
         resetSnackList()
     }
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                     )
 
                 val addDialog = AlertDialog.Builder(this)
-                    .setTitle("Add New Order")
+                    .setTitle("Add New Item")
                     .setView(addView)
                     .setPositiveButton("Confirm") { _, _ ->
                         addOrder(categoryChooser.selectedItem as String, editText.text.toString())}

@@ -11,7 +11,6 @@ import androidx.test.rule.ActivityTestRule
 
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.Matchers
-import org.hamcrest.beans.HasPropertyWithValue.hasProperty
 
 import org.junit.Rule
 import org.junit.Test
@@ -68,7 +67,7 @@ class FilterTests{
                 withText("French fries")
             ),
             withParent(
-                withId(R.id.snackList)
+                withId(R.id.snack_list)
             )
         )
 
@@ -84,7 +83,7 @@ class FilterTests{
         onView(withId(R.id.veggie_checkbox)).perform(click())
         onView(withId(R.id.veggie_checkbox)).perform(click())
 
-        checkBox.check(matches(hasProperty("isChecked", equalTo(true))))
+        checkBox.check(matches(isChecked()))
     }
 
     private fun checkSnackItems(
